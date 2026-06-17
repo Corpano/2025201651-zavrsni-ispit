@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova zanimljivost - ZooIndex</title>
+    
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/global.css">
+</head>
+
+<body data-bs-theme="light">
+
+    <main class="container">
+        <div class="crud-container">
+            <div class="card">
+                <div class="card-header fw-bold">Nova zanimljivost</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="animal" class="form-label">Zivotinja:</label>
+                        <select class="form-select" id="animal"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Naslov:</label>
+                        <input type="text" class="form-control" id="title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Tekst:</label>
+                        <textarea class="form-control" id="content"></textarea>
+                    </div>
+                </div>
+                <div class="card-footer page-actions">
+                    <button type="button" class="btn btn-success" id="save">
+                        <i class="fa-solid fa-floppy-disk"></i> Sacuvaj
+                    </button>
+                    <a href="/fact.html" class="btn btn-secondary">Nazad</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/utils.js"></script>
+
+
+
+    <script>
+        const inputAnimal = document.getElementById("animal");
+
+        fetch("/api/animal")
+            .then(rsp => rsp.json())
+            .then(animals => {
+                for (let animal of animals) {
+                    const opt = document.createElement("option");
+                    opt.value = animal.animalId;
+                    opt.innerText = `${animal.commonName} (${animal.latinName})`;
+                    inputAnimal.appendChild(opt);
+                }
+            });
+
+        document.getElementById("save").addEventListener("click", () => {
+            showConfirm("Dodaj novu zanimljivost?", () => {
+                fetch("/api/fact", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        title: document.getElementById("title").value,
+                        content: document.getElementById("content").value,
+                        animal: {
+                            animalId: inputAnimal.value
+                        }
+                    })
+                }).then(() => openPage("/fact.html"));
+            });
+        });
+    </script>
+</body>
+
+</html>

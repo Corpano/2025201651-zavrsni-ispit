@@ -1,0 +1,116 @@
+body {
+    min-height: 100vh;
+    background: linear-gradient(180deg, rgba(13, 110, 253, 0.12), rgba(255, 255, 255, 0) 260px),#f4f7fb;
+}
+
+main.container {
+    padding-bottom: 32px;
+}
+
+.navbar {
+    background: rgba(255, 255, 255, 0.92) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+.card {
+    border-color: rgba(15, 23, 42, 0.08);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+}
+
+.card-header {
+    background: rgba(13, 110, 253, 0.06);
+}
+
+.crud-container {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.page-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.table td,
+.table th {
+    vertical-align: middle;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.animal-thumbnail {
+    width: 72px;
+    height: 54px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.home-card-icon {
+    align-items: center;
+    background: rgba(13, 110, 253, 0.12);
+    border-radius: 8px;
+    color: #0d6efd;
+    display: inline-flex;
+    height: 44px;
+    justify-content: center;
+    margin-bottom: 14px;
+    width: 44px;
+}
+
+.animal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.animal-card-img {
+    aspect-ratio: 4 / 3;
+    background: #eef2f7;
+    object-fit: cover;
+}
+
+.animal-card-placeholder {
+    align-items: center;
+    aspect-ratio: 4 / 3;
+    background: #eef2f7;
+    color: #94a3b8;
+    display: flex;
+    font-size: 32px;
+    justify-content: center;
+}
+
+.animal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.animal-description {
+    min-height: 72px;
+}
+
+.animal-facts {
+    border-top: 1px solid rgba(15, 23, 42, 0.08);
+    padding-top: 12px;
+}
+
+.fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}

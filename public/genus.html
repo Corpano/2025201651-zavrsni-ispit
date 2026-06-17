@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rodovi - ZooIndex</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/global.css">
+</head>
+
+<body data-bs-theme="light">
+    <main class="container">
+        <div class="card">
+            <div class="card-header fw-bold">Rodovi zivotinja</div>
+            <div class="card-body table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Naziv</th>
+                            <th>Latinski naziv</th>
+                            <th>Porodica</th>
+                            <th>Opis</th>
+                            <th>Opcije</th>
+                        </tr>
+                    </thead>
+                    <tbody id="genera"></tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <a href="/new-genus.html" class="btn btn-primary">
+                    <i class="fa-solid fa-plus"></i> Dodaj rod
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/utils.js"></script>
+    <script>
+        function edit(id) {
+            openPage(`/edit-genus.html?id=${id}`);
+        }
+
+        function remove(id) {
+            showConfirm(`Obrisi rod ${id}?`, () => {
+                fetch(`/api/genus/${id}`, { method: "DELETE" })
+                    .then(() => window.location.reload());
+            });
+        }
+
+        retrieveData("/api/genus", data => {
+            let content = "";
+            for (let genus of data) {
+                content += `
+                    <tr>
+                        <th scope="row">${genus.genusId}</th>
+                        <td>${genus.name}</td>
+                        <td>${genus.latinName}</td>
+                        <td>${genus.familyName}</td>
+                        <td>${genus.description}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-success" type="button" onclick="edit(${genus.genusId})">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" type="button" onclick="remove(${genus.genusId})">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
+            document.getElementById("genera").innerHTML = content;
+        });
+    </script>
+</body>
+
+</html>
